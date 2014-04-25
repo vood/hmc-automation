@@ -274,6 +274,11 @@ DB2AUTOSTART='YES'
     owner => 'db2inst1',
     ensure => 'present'
   }
+
+  exec { "/usr/sbin/chps -s 39 hd6":
+    command => "/usr/sbin/chps -s 39 hd6",
+    unless => "/usr/sbin/lsps -a | /usr/bin/grep hd6 | /usr/bin/grep 5504MB"
+  }
 }
 
 node /^aix-qa-/ {
