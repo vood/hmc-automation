@@ -242,7 +242,7 @@ KeepAliveTimeout 60
   }
 
   file { "/home/db2inst1/sqllib/db2nodes.cfg":
-    content => inline_template("0 ${hostname} 0")
+    content => inline_template("0 ${hostname} 0\n")
   }
 
   file { "/etc/environment":
