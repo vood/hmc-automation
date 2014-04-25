@@ -1,0 +1,54 @@
+dev:
+  hmc:
+    host: <hmc-host>
+    user: <hmc-user>
+    password: <hmc-password>
+    servers:
+      Server-8231-E2C-SN21EAF5T:
+        vios:
+          name: VIOS
+          profile_name: vios_default
+          host: <hmc-host>
+          user: <hmc-user>
+          password: <hmc-password>
+          vg: datavg
+
+  lpar_templates:
+    # mksyscfg -r lpar -m MACHINE -i name=LPARNAME, profile_name=normal, lpar_env=aixlinux, shared_proc_pool_util_auth=1,
+    #   min_mem=512, desired_mem=2048, max_mem=4096,   proc_mode=shared, min_proc_units=0.2, desired_proc_units=0.5,
+    #   max_proc_units=2.0, min_procs=1, desired_procs=2, max_procs=2, sharing_mode=uncap, uncap_weight=128,
+    #   boot_mode=norm, conn_monitoring=1, shared_proc_pool_util_auth=1
+    aix:
+      profile:
+        profile_name: aix_default
+        lpar_env: aixlinux
+        shared_proc_pool_util_auth: 1
+        min_mem: 3072
+        desired_mem: 4096
+        max_mem: 5120
+        proc_mode: shared
+        min_proc_units: 0.5
+        desired_proc_units: 1
+        max_proc_units: 2
+        min_procs: 1
+        desired_procs: 2
+        max_procs: 2
+        sharing_mode: uncap
+        uncap_weight: 128
+        boot_mode: norm
+        conn_monitoring: 1
+        shared_proc_pool_util_auth: 1
+        auto_start: 1
+        virtual_eth_adapters: 2/0/1//0/0/ETHERNET0//all/none
+        max_virtual_slots: 10
+        #virtual-slot-number/client-or-server/[supports-HMC]/[remote-lpar-ID]/[remote-lpar-name]/[remote-slot-number]/is-required
+        #virtual_scsi_adapters: "3/client/3/VIOS/%d/0"
+      storage:
+        size: 100
+
+
+
+
+
+
+
