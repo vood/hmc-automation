@@ -213,7 +213,7 @@ domain  cup1.sugarcrm.net
 
   file { "/opt/freeware/etc/httpd/conf/extra/server-tuning.conf":
     content => inline_template("
-StartServers 700
+StartServers 2
 MinSpareServers 25
 MaxSpareServers 50
 ServerLimit 800
@@ -264,7 +264,7 @@ CLCMD_PASSTHRU=1
 "
   }
 
-  file { "/home/db2inst1/sqllib/profile.env"
+  file { "/home/db2inst1/sqllib/profile.env":
     content => "
 DB2_COMPATIBILITY_VECTOR='4008'
 DB2COMM='TCPIP'
