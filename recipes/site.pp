@@ -173,7 +173,7 @@ class aix {
     command => "/usr/bin/cpan YAML"
   }
 
-  $memory_limit = '-1'
+  $memory_limit = '2048M'
   $error_reporting = 'E_ALL'
 
   file {"/opt/freeware/etc/php.ini":
