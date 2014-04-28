@@ -261,6 +261,9 @@ LC__FASTMSG=true
 ODMDIR=/etc/objrepos
 # Clustering variable to allow commands to bypass clcmd checks.
 CLCMD_PASSTHRU=1
+
+# Increases the process memory so phpunit will not run out of memory
+export LDR_CNTRL=MAXDATA=0x20000000
 "
   }
 
