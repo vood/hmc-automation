@@ -363,7 +363,14 @@ node /^aix-qa-/ {
   include aix
 }
 
+class { 'elasticsearch':
+  package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',
+  java_install => true
+}
+
 node /^sugareps-centos-/ {
+  include 'elasticsearch'
+
   package { 'php':
     ensure          => installed
   }
@@ -375,4 +382,5 @@ node /^sugareps-centos-/ {
   package { 'php-cli':
     ensure          => installed
   }
+
 }
