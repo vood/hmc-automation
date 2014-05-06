@@ -1,6 +1,7 @@
 class sugareps inherits devops::params {
 
   ## Lets Configure the PHP Variables
+  $php_package              = 'php53u'
   $php_timezone             = params_lookup('php_timezone')
   $php_error_log            = params_lookup('php_error_log')
   $php_realpath_cache_size  = params_lookup('php_realpath_cache_size')
@@ -18,11 +19,10 @@ class sugareps inherits devops::params {
   $php_xdebug_max_nexting_levels = params_lookup('php_xdebug_max_nexting_levels')
 
   $elastic_version          = '0.90.7-1'
-  $php_package              = 'php53u'
 
   class { 'resolver':
-    dns_servers => [ '10.8.1.101' , '10.8.1.102' ],
-    search      => [ 'sjc.sugarcrm.pvt' , 'cup1.sugarcrm.net', 'sugarcrm.net', 'sugarcrm.pvt' ];
+    dns_servers => [ '10.8.1.30' ],
+    search      => [ 'cup1.sugarcrm.net', 'sugarcrm.net', 'sugarcrm.pvt' ];
   }
 
   exec {'yum-clean-metadata':
@@ -62,9 +62,9 @@ class sugareps inherits devops::params {
     java_install => true,
     config => {
     'cluster' => {
-    'name' => 'batman',
-    'discovery.zen.ping.multicast.enabled' => 'false'
-    }
+      'name' => 'batman',
+      'discovery.zen.ping.multicast.enabled' => 'false'
+      }
     }
   }
 
