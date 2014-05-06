@@ -15,4 +15,14 @@ class sugareps {
 
   class { 'db2': }
 
+  class { 'elasticsearch':
+    version => '0.90.7-1',
+      java_install => true,
+      config => {
+      'cluster' => {
+      'name' => 'batman',
+      'discovery.zen.ping.multicast.enabled' => 'false'
+      }
+    }
+  }
 }
