@@ -1,0 +1,17 @@
+PATH=/usr/bin:/etc:/usr/sbin:/usr/ucb:/usr/bin/X11:/sbin:/usr/java5/jre/bin:/usr/java5/bin:/opt/freeware/bin:/opt/freeware/bin/sbin
+TZ=America/Los_Angeles
+LANG=en_US
+LOCPATH=/usr/lib/nls/loc
+NLSPATH=/usr/lib/nls/msg/%L/%N:/usr/lib/nls/msg/%L/%N.cat:/usr/lib/nls/msg/%l.%c/%N:/usr/lib/nls/msg/%l.%c/%N.cat
+LC__FASTMSG=true
+
+# ODM routines use ODMDIR to determine which objects to operate on
+# the default is /etc/objrepos - this is where the device objects
+# reside, which are required for hardware configuration
+
+ODMDIR=/etc/objrepos
+# Clustering variable to allow commands to bypass clcmd checks.
+CLCMD_PASSTHRU=1
+
+# Increases the process memory so phpunit will not run out of memory
+export LDR_CNTRL=MAXDATA=0x40000000
