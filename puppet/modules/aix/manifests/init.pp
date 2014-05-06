@@ -151,7 +151,7 @@ file { "/home/puppet/.ssh":
   owner   => 'puppet'
 }->
 file { "/home/puppet/.ssh/id_rsa":
-  content => template("ibm_sc/id_rsa.erb"),
+  content => template("aix/id_rsa.erb"),
   mode    => 0600,
   owner   => 'puppet'
 }->
@@ -161,7 +161,7 @@ file { "/.ssh":
   owner   => 'root'
 }->
 file { "/.ssh/id_rsa":
-  content => template("ibm_sc/id_rsa.erb"),
+  content => template("aix/id_rsa.erb"),
   mode    => 0600,
   owner   => 'root'
 }->
@@ -177,7 +177,7 @@ $memory_limit = '2048M'
 $error_reporting = 'E_ALL'
 
 file {"/opt/freeware/etc/php.ini":
-  content => template('ibm_sc/php.ini.erb'),
+  content => template('aix/php.ini.erb'),
   owner   => 'root',
   mode    => 0644,
   require => File['/opt/freeware/bin/php'],
@@ -216,7 +216,7 @@ file { "/opt/freeware/etc/httpd/conf/extra/server-tuning.conf":
   ensure => 'present',
 }->
 file { "/opt/freeware/etc/httpd/conf/httpd.conf":
-  content => template('ibm_sc/httpd.conf.erb'),
+  content => template('aix/httpd.conf.erb'),
   owner   => 'root',
   mode    => 0644,
   require => File['/opt/freeware/sbin/httpd'],

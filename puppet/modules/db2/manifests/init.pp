@@ -4,7 +4,7 @@ class db2 {
     creates => '/tmp/ibm.tar.gz'
   }->
   file { '/tmp/db2expc.rsp':
-    content => template('ibm_sc/db2expc.rsp.erb')
+    content => template('db2/db2expc.rsp.erb')
   }->
   exec { '/usr/bin/tar zxf /tmp/ibm.tar.gz':
     command => '/usr/bin/tar zxf /tmp/ibm.tar.gz',
