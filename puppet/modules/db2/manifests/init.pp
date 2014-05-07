@@ -24,8 +24,7 @@ class db2 {
   }
 
   package {
-   ['pdksh',
-    'compat-libstdc++-33',
+   ['compat-libstdc++-33',
     'compat-libstdc++-33.i686',
     'libaio',
     'libaio.i686',
