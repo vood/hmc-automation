@@ -12,11 +12,12 @@ class db2 {
   }->
   exec { "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp":
     command => "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp",
-    creates => "$tmp/db2setup.sh"
+    creates => "$tmp/db2setup"
   }->
   exec { "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp":
     command => "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp",
-    timeout => 1800
+    timeout => 1800,
+    creates => '/opt/ibm/db2/V10.5/bin/db2'
   }->
   file { "/home/db2inst1/sqllib/adm/.fenced":
     owner => "db2inst1",
