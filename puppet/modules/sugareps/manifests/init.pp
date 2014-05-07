@@ -95,7 +95,7 @@ class sugareps inherits devops::params {
   include nodejs
 
   package { ['uglifyjs', 'jshint']:
-    ensure   => latest,
+    ensure   => 'installed',
     provider => 'npm',
   }
 
