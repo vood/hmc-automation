@@ -106,6 +106,7 @@ class sugareps inherits devops::params {
     provider => 'gem',
   }
 
+  #Install PHP IBM DB2 extension
   exec {'download ibm_db2 extension archive':
     command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
     creates => '/tmp/ibm_db2.tar.gz',
