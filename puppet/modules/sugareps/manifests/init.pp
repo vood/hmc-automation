@@ -69,7 +69,7 @@ class sugareps inherits devops::params {
 #    }
   }
 
-  package { [ 'zip', 'unzip', 'bind-utils' ]:
+  package { [ 'zip', 'unzip', 'bind-utils', 'ruby-devel' ]:
     ensure => 'installed'
   }
 
