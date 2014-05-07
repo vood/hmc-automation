@@ -10,12 +10,12 @@ class db2 {
   file { "$tmp/db2expc.rsp":
     content => template("db2/db2expc.rsp.erb")
   }->
-  exec { "/bin/tar zxf $tmp.tar.gz -C /tmp":
-    command => "/bin/tar zxf ibm.tar.gz /tmp",
+  exec { "/bin/tar zxf ibm.tar.gz -C $tmp":
+    command => "/bin/tar zxf ibm.tar.gz -C $tmp",
     creates => "$tmp/db2setup.sh"
   }->
-  exec { "$tmp/db2setup -f sysreq -r $tmp/db2expc.rsp":
-    command => "$tmp/db2setup -f sysreq -r $tmp/db2expc.rsp",
+  exec { "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp":
+    command => "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp",
     timeout => 1800
   }->
   file { "/home/db2inst1/sqllib/adm/.fenced":
