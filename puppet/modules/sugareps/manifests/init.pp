@@ -2,9 +2,9 @@ class sugareps inherits devops::params {
 
   ## Lets Configure the PHP Variables
   $php_timezone             = params_lookup('php_timezone')
-  $php_error_log            = params_lookup('php_error_log')
+  $php_error_log            = 'E_ALL'
   $php_realpath_cache_size  = params_lookup('php_realpath_cache_size')
-  $php_memory_limit         = params_lookup('php_memory_limit')
+  $php_memory_limit         = '1024'
   $php_max_input_time       = params_lookup('php_max_input_time')
   $php_max_input_vars       = params_lookup('php_max_input_vars')
   $php_max_execution_time   = params_lookup('php_max_execution_time')
@@ -90,4 +90,19 @@ class sugareps inherits devops::params {
   }
 
   class { 'db2': }
+
+  #NodeJs and packages
+  include nodejs
+
+  package { ['uglifyjs', 'jshint']:
+    ensure   => latest,
+    provider => 'npm',
+  }
+
+  #Ruby gems
+  package { 'jsduck':
+    ensure   => 'installed',
+    provider => 'gem',
+  }
+
 }
