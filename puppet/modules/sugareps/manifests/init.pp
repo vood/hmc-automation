@@ -70,7 +70,8 @@ class sugareps inherits devops::params {
   }
 
   package { [ 'zip', 'unzip', 'bind-utils', 'ruby-devel' ]:
-    ensure => 'installed'
+    ensure => 'installed',
+    before => Package['jsduck']
   }
 
   file { '/etc/motd':
