@@ -60,13 +60,13 @@ class sugareps inherits devops::params {
   # Install Elastic Search
   class { 'elasticsearch':
     version => $elastic_version,
-    java_install => true,
-    config => {
-    'cluster' => {
-      'name' => 'batman',
-      'discovery.zen.ping.multicast.enabled' => 'false'
-      }
-    }
+#    java_install => true,
+#    config => {
+#    'cluster' => {
+#      'name' => 'batman',
+#      'discovery.zen.ping.multicast.enabled' => 'false'
+#      }
+#    }
   }
 
   package { [ 'zip', 'unzip', 'bind-utils' ]:
