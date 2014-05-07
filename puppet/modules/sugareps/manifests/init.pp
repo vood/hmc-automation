@@ -106,15 +106,15 @@ class sugareps inherits devops::params {
     provider => 'gem',
   }
 
-  exec {'/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz':
+  exec {'download ibm_db2 extension archive':
     command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
     creates => '/tmp/ibm_db2.tar.gz',
   }->
-  exec {'/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp':
+  exec {'unzip ibm_db2 extension archive':
     command => '/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp',
     creates => '/tmp/ibm_db2-1.9.5'
   }->
-  exec { 'cd /tmp/ibm_db2-1.9.5 && phpize --clean && phpize && ./configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && make && make install':
+  exec { 'compile and install':
     command => 'cd /tmp/ibm_db2-1.9.5 && phpize --clean && phpize && ./configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && make && make install',
   }
 
