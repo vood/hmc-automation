@@ -10,8 +10,8 @@ class db2 {
   file { "$tmp/db2expc.rsp":
     content => template("db2/db2expc.rsp.erb")
   }->
-  exec { "/bin/tar zxf ibm.tar.gz -C $tmp":
-    command => "/bin/tar zxf ibm.tar.gz -C $tmp",
+  exec { "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp":
+    command => "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp",
     creates => "$tmp/db2setup.sh"
   }->
   exec { "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp":
