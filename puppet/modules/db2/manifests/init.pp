@@ -22,4 +22,17 @@ class db2 {
     owner => "db2inst1",
     group => "db2iadm1"
   }
+
+  package {
+   ['pdksh',
+    'compat-libstdc++-33',
+    'compat-libstdc++-33.i686',
+    'libaio',
+    'libaio.i686',
+    'pam-1.1.1-17.el6.x86_64',
+    'pam-1.1.1-17.el6.i686',
+    'nfs-utils']:
+    ensure => 'installed',
+    before => File["$tmp"]
+  }
 }
