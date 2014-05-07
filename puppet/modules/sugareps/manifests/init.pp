@@ -109,7 +109,6 @@ class sugareps inherits devops::params {
   exec {'/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz':
     command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
     creates => '/tmp/ibm_db2.tar.gz',
-    require => Class['db2']
   }->
   exec {'/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp':
     command => '/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp',
