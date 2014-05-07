@@ -116,7 +116,7 @@ class sugareps inherits devops::params {
     creates => '/tmp/ibm_db2-1.9.5'
   }->
   exec { 'compile and install':
-    command => 'cd /tmp/ibm_db2-1.9.5 && phpize --clean && phpize && ./configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && make && make install',
+    command => 'cd /tmp/ibm_db2-1.9.5 && /usr/bin/phpize --clean && /usr/bin/phpize && ./configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && /usr/bin/make && /usr/bin/make install',
   }
 
   file { '/etc/php.d/ibm_db2.ini':
