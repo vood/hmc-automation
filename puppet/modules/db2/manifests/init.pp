@@ -1,5 +1,5 @@
 class db2 {
-  exec { '/usr/bin/wget "http://10.8.7.188/v10.5fp1_linuxx64_expc.tar.gz':
+  exec { '/usr/bin/wget http://10.8.7.188/v10.5fp1_linuxx64_expc.tar.gz':
     command => '/usr/bin/wget "http://10.8.7.188/v10.5fp1_linuxx64_expc.tar.gz -O /tmp/ibm.tar.gz',
     creates => '/tmp/ibm.tar.gz'
   }->

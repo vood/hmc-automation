@@ -19,7 +19,7 @@ class sugareps inherits devops::params {
 
   $php_package              = 'php53u'
   $elastic_version          = '0.90.7'
-  $mysql_package            = 'mysql56u'
+  $mysql_package            = 'mysql'
 
   class { 'resolver':
     dns_servers => [ '10.8.1.30' ],
@@ -74,7 +74,7 @@ class sugareps inherits devops::params {
   }
 
   file { '/etc/motd':
-    content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2. 4.x\n\n"
+    content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2.4.x\n\n"
   }
 
   # Lets Install MySQL
@@ -87,15 +87,6 @@ class sugareps inherits devops::params {
     mysql_user => $mysql_user,
     mysql_pass=> $mysql_pass,
     mysql_db => $mysql_db;
-  }
-
-  package { 'yum-plugin-replace':
-    ensure => 'installed',
-    before => [Class['mysql']]
-  }->
-
-  exec { "yum replace mysql-libs --replace-with=$mysql_package-libs":
-    command => "yum replace mysql-libs --replace-with=$mysql_package-libs"
   }
 
   class { 'db2': }
