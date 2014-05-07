@@ -1,7 +1,6 @@
 class sugareps inherits devops::params {
 
   ## Lets Configure the PHP Variables
-  $php_package              = 'php53u'
   $php_timezone             = params_lookup('php_timezone')
   $php_error_log            = params_lookup('php_error_log')
   $php_realpath_cache_size  = params_lookup('php_realpath_cache_size')
@@ -18,7 +17,9 @@ class sugareps inherits devops::params {
 
   $php_xdebug_max_nexting_levels = params_lookup('php_xdebug_max_nexting_levels')
 
-  $elastic_version          = '0.90.7-1'
+  $php_package              = 'php53u'
+  $elastic_version          = '0.90.7'
+  $mysql_package            = 'mysql56u'
 
   class { 'resolver':
     dns_servers => [ '10.8.1.30' ],
@@ -37,7 +38,7 @@ class sugareps inherits devops::params {
     enabled        => 1,
     gpgcheck       => 0,
     priority       => 1,
-    before         => [Class['apache'], Class['php'], Class['mysql']],
+    before         => [Class['apache'], Class['php']],
     require        => [Class['resolver']],
     notify         => [Exec['yum-clean-metadata']];
   }
@@ -73,7 +74,28 @@ class sugareps inherits devops::params {
   }
 
   file { '/etc/motd':
-    content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2.4.x\n\n"
+    content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2. 4.x\n\n"
+  }
+
+  # Lets Install MySQL
+  # Get the MySQL Params
+  $mysql_user = params_lookup('mysql_username')
+  $mysql_pass = params_lookup('mysql_password')
+  $mysql_db   = params_lookup('mysql_database')
+  devops::mysql { 'devops_mysql':
+    mysql_package => $mysql_package,
+    mysql_user => $mysql_user,
+    mysql_pass=> $mysql_pass,
+    mysql_db => $mysql_db;
+  }
+
+  package { 'yum-plugin-replace':
+    ensure => 'installed',
+    before => [Class['mysql']]
+  }->
+
+  exec { "yum replace mysql-libs --replace-with=$mysql_package-libs":
+    command => "yum replace mysql-libs --replace-with=$mysql_package-libs"
   }
 
   class { 'db2': }
