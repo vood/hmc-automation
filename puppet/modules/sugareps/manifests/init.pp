@@ -109,6 +109,7 @@ class sugareps inherits devops::params {
   }
 
   file { '/etc/php.ini':
+    name => 'override /etc/php.ini',
     content => template('sugareps/php.ini.erb'),
     require => Class['php']
   }
