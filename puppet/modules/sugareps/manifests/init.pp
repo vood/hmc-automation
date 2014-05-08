@@ -53,7 +53,7 @@ class sugareps inherits devops::params {
   }
 
   # Lets Install PHP
-  devops::php { 'devops_php' :
+  sugareps::php { 'devops_php' :
     php_package => $php_package;
   }
 
@@ -106,12 +106,6 @@ class sugareps inherits devops::params {
     ensure   => 'installed',
     provider => 'gem',
     require => Package['ruby-devel']
-  }
-
-  file { '/etc/php.ini':
-    name => 'override /etc/php.ini',
-    content => template('sugareps/php.ini.erb'),
-    require => Class['php']
   }
 
   #Install PHP IBM DB2 extension
