@@ -38,7 +38,7 @@ class sugareps inherits devops::params {
     enabled        => 1,
     gpgcheck       => 0,
     priority       => 1,
-    before         => [Class['apache'], Class['php']],
+    before         => [Class['apache'], Class['php'], Class['nodejs']],
     require        => [Class['resolver']],
     notify         => [Exec['yum-clean-metadata']];
   }
