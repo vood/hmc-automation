@@ -12,7 +12,7 @@ class db2 {
   }->
   exec { "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp":
     command => "/bin/tar zxf $tmp/ibm.tar.gz -C $tmp",
-    creates => "$tmp/db2setup"
+    creates => "$tmp/expc/db2setup"
   }->
   exec { "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp":
     command => "$tmp/expc/db2setup -f sysreq -r $tmp/db2expc.rsp",
