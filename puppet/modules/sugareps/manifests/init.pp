@@ -71,7 +71,6 @@ class sugareps inherits devops::params {
 
   package { [ 'zip', 'unzip', 'bind-utils', 'ruby-devel' ]:
     ensure => 'installed',
-    before => Package['jsduck']
   }
 
   file { '/etc/motd':
@@ -98,18 +97,21 @@ class sugareps inherits devops::params {
   package { ['uglifyjs', 'jshint']:
     ensure   => 'installed',
     provider => 'npm',
+    require => Class['nodejs']
   }
 
   #Ruby gems
   package { 'jsduck':
     ensure   => 'installed',
     provider => 'gem',
+    require => Package['ruby-devel']
   }
 
   #Install PHP IBM DB2 extension
   exec {'download ibm_db2 extension archive':
     command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
     creates => '/tmp/ibm_db2.tar.gz',
+    require => Class['db2']
   }->
   exec {'unzip ibm_db2 extension archive':
     command => '/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp',
