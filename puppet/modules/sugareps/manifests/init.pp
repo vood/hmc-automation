@@ -89,10 +89,11 @@ class sugareps inherits devops::params {
     mysql_db => $mysql_db;
   }
 
+  #Install DB2
   class { 'db2': }
 
   #NodeJs and packages
-  include nodejs
+  class { 'nodejs': }
 
   package { ['uglifyjs', 'jshint']:
     ensure   => 'installed',
@@ -111,16 +112,15 @@ class sugareps inherits devops::params {
   exec {'download ibm_db2 extension archive':
     command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
     creates => '/tmp/ibm_db2.tar.gz',
-    require => Class['db2']
+    require => [Class['db2'], Class['php']]
   }->
   exec {'unzip ibm_db2 extension archive':
     command => '/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp',
     creates => '/tmp/ibm_db2-1.9.5'
   }->
   exec { 'compile and install':
-    command => '/bin/sh -c "cd /tmp/ibm_db2-1.9.5 && /usr/bin/phpize --clean && /usr/bin/phpize && /tmp/ibm_db2-1.9.5/configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && /usr/bin/make && /usr/bin/make install"',
-  }
-
+    command => '/bin/sh -c "cd /tmp/ibm_db2-1.9.5 && /usr/bin/phpize --clean && /usr/bin/phpize && /tmp/ibm_db2-1.9.5/configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && && /usr/bin/make clean && /usr/bin/make && /usr/bin/make install"',
+  }->
   file { '/etc/php.d/ibm_db2.ini':
     content => 'extension=ibm_db2.so'
   }
