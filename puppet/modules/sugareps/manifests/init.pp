@@ -1,10 +1,11 @@
 class sugareps inherits devops::params {
 
   ## Lets Configure the PHP Variables
+  $php_package              = params_lookup('php_package')
   $php_timezone             = params_lookup('php_timezone')
-  $php_error_log            = 'E_ALL'
+  $php_error_log            = params_lookup('php_error_log')
   $php_realpath_cache_size  = params_lookup('php_realpath_cache_size')
-  $php_memory_limit         = '1024'
+  $php_memory_limit         = params_lookup('php_memory_limit')
   $php_max_input_time       = params_lookup('php_max_input_time')
   $php_max_input_vars       = params_lookup('php_max_input_vars')
   $php_max_execution_time   = params_lookup('php_max_execution_time')
@@ -17,7 +18,6 @@ class sugareps inherits devops::params {
 
   $php_xdebug_max_nexting_levels = params_lookup('php_xdebug_max_nexting_levels')
 
-  $php_package              = 'php53u'
   $elastic_version          = '0.90.7'
   $mysql_package            = 'mysql'
 
@@ -106,6 +106,11 @@ class sugareps inherits devops::params {
     ensure   => 'installed',
     provider => 'gem',
     require => Package['ruby-devel']
+  }
+
+  file { '/etc/php.ini':
+    content => template('sugareps/php.ini.erb')
+    require => Class['php']
   }
 
   #Install PHP IBM DB2 extension
