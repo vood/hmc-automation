@@ -1,127 +1,22 @@
-class sugareps inherits devops::params {
-
-  ## Lets Configure the PHP Variables
-  $php_package              = params_lookup('php_package')
-  $php_timezone             = params_lookup('php_timezone')
-  $php_error_log            = params_lookup('php_error_log')
-  $php_realpath_cache_size  = params_lookup('php_realpath_cache_size')
-  $php_memory_limit         = params_lookup('php_memory_limit')
-  $php_max_input_time       = params_lookup('php_max_input_time')
-  $php_max_input_vars       = params_lookup('php_max_input_vars')
-  $php_max_execution_time   = params_lookup('php_max_execution_time')
-
-  $php_apc_shm_size         = params_lookup('php_apc_shm_size')
-  $php_apc_unit_size        = params_lookup('php_apc_unit_size')
-  $php_apc_enabled          = params_lookup('php_apc_enabled')
-  $php_apc_gc_ttl           = params_lookup('php_apc_gc_ttl')
-  $php_apc_enable_cli       = params_lookup('php_apc_enable_cli')
-
-  $php_xdebug_max_nexting_levels = params_lookup('php_xdebug_max_nexting_levels')
-
-  $elastic_version          = '0.90.7'
-  $mysql_package            = 'mysql'
-
-  class { 'resolver':
-    dns_servers => [ '10.8.1.30' ],
-    search      => [ 'cup1.sugarcrm.net', 'sugarcrm.net', 'sugarcrm.pvt' ];
-  }
-
-  exec {'yum-clean-metadata':
-    command => '/usr/bin/yum clean metadata',
-    refreshonly => true
-  }
-
-  # Setup the Devops
-  yum::managed_yumrepo { 'sugardevops':
-    descr          => 'Sugar DevOps Rep',
-    baseurl        => 'http://sugar-puppet.h2ik.co/repo/sugar-devops/el6/x86_64/',
-    enabled        => 1,
-    gpgcheck       => 0,
-    priority       => 1,
-    before         => [Class['apache'], Class['php'], Class['nodejs']],
-    require        => [Class['resolver']],
-    notify         => [Exec['yum-clean-metadata']];
-  }
-
-  class {'devops::known_hosts' :
-    before => [Class['git']],
-    require => [Package['bind-utils']];
-  }
-
-  # Lets Install Apache
-  devops::apache { 'devops_apache' :
-  }
-
-  # Lets Install PHP
-  sugareps::php { 'devops_php' :
-    php_package => $php_package;
-  }
-
-  # Install Elastic Search
-  class { 'elasticsearch':
-    version => $elastic_version,
-#    java_install => true,
-#    config => {
-#    'cluster' => {
-#      'name' => 'batman',
-#      'discovery.zen.ping.multicast.enabled' => 'false'
-#      }
-#    }
-  }
-
-  package { [ 'zip', 'unzip', 'bind-utils', 'ruby-devel' ]:
-    ensure => 'installed',
-  }
+class sugareps {
 
   file { '/etc/motd':
     content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2.4.x\n\n"
   }
 
-  # Lets Install MySQL
-  # Get the MySQL Params
-  $mysql_user = params_lookup('mysql_username')
-  $mysql_pass = params_lookup('mysql_password')
-  $mysql_db   = params_lookup('mysql_database')
-  devops::mysql { 'devops_mysql':
-    mysql_package => $mysql_package,
-    mysql_user => $mysql_user,
-    mysql_pass=> $mysql_pass,
-    mysql_db => $mysql_db;
+  $mysql_package = 'false'
+  $elastic_version = '0.90.7'
+  $include_autoutils = 0
+
+  class { 'devops':
+    php_package     => 'php53u',
+    mysql_package   => $mysql_package,
+    deploy_environment => 'vagrantdb2'
   }
 
-  #Install DB2
-  class { 'db2': }
-
-  #NodeJs and packages
-  class { 'nodejs': }
-
-  package { ['uglifyjs', 'jshint']:
-    ensure   => 'installed',
-    provider => 'npm',
-    require => Class['nodejs']
-  }
-
-  #Ruby gems
-  package { 'jsduck':
-    ensure   => 'installed',
-    provider => 'gem',
-    require => Package['ruby-devel']
-  }
-
-  #Install PHP IBM DB2 extension
-  exec {'download ibm_db2 extension archive':
-    command => '/usr/bin/wget http://pecl.php.net/get/ibm_db2 -O /tmp/ibm_db2.tar.gz',
-    creates => '/tmp/ibm_db2.tar.gz',
-    require => [Class['db2'], Class['php']]
-  }->
-  exec {'unzip ibm_db2 extension archive':
-    command => '/bin/tar zxf /tmp/ibm_db2.tar.gz -C /tmp',
-    creates => '/tmp/ibm_db2-1.9.5'
-  }->
-  exec { 'compile and install':
-    command => '/bin/sh -c "cd /tmp/ibm_db2-1.9.5 && /usr/bin/phpize --clean && /usr/bin/phpize && /tmp/ibm_db2-1.9.5/configure --with-IBM_DB2=/opt/ibm/db2/V10.5 && /usr/bin/make && /usr/bin/make install"',
-  }->
-  file { '/etc/php.d/ibm_db2.ini':
-    content => 'extension=ibm_db2.so'
+  # since we are not installing mysql and this is the db2 box, we should install db2, but we need to make sure that
+  # the apache and php are installed first class is installed first
+  class { 'devops::db2::install':
+    require => [Devops::Apache['devops_apache'], Devops::Php['devops_php']]
   }
 }
