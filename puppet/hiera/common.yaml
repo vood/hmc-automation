@@ -1,7 +1,5 @@
-sugareps:
-  php_package: php53u
-devops:
-  php_memory_limit: 1024
-  create_database: true
-  include_autoutils: false
-  php_error_log: E_ALL
+sugareps_php_package: php53u
+devops_php_memory_limit: 1024
+devops_create_database: true
+devops_include_autoutils: false
+devops_php_error_log: E_ALL
