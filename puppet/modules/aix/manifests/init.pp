@@ -127,7 +127,7 @@ exec { "chfs":
   command => "/usr/sbin/chfs -a size=20G /"
 }->
 exec { "crfs":
-  command => "/usr/sbin/crfs -m /ramdisk0 -a size=16G -g rootvg -v jfs2 -a mount=true",
+  command => "/usr/sbin/crfs -m /ramdisk0 -a size=16G -g rootvg -v jfs2 -a mount=true -A on",
   creates => "/ramdisk0"
 }->
 exec { "unmount ramdisk0":

@@ -1,0 +1,5 @@
+devops:
+  php_memory_limit: 1024
+  create_database: true
+  include_autoutils: false
+  php_error_log: E_ALL
