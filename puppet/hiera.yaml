@@ -1,6 +1,16 @@
 ---
-:backends: yaml
-:yaml:
-  :datadir: /etc/puppet/hiera
-:hierarchy: common
+:backends:
+  - yaml
+  - puppet
+
 :logger: console
+
+:hierarchy:
+  - "sites/%{location}"
+  - common
+
+:yaml:
+   :datadir: /etc/puppet/hiera
+
+:puppet:
+   :datasource: data
