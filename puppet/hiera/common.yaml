@@ -1,4 +1,4 @@
-sugaeps:
+sugareps:
   php_package: php53u
 devops:
   php_memory_limit: 1024
