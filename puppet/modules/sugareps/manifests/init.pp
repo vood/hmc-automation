@@ -24,7 +24,6 @@ class sugareps {
 
   php::pear::module { "Log":
     repository => 'pear.php.net',
-    require => [Devops::Php['devops_php']],
     module_prefix => 'php53u-'
   }
 }
