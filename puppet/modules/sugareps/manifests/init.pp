@@ -1,7 +1,7 @@
 class sugareps {
 
-  $php_package = params_lookup('php_package', 'global')
-  $mysql_package_param = params_lookup('mysql_package', 'global')
+  $php_package = params_lookup('php_package')
+  $mysql_package_param = params_lookup('mysql_package')
 
   file { '/etc/motd':
     content => "SugarEPS: PHP 5.3.x, IBM DB2 10.5, Apache 2.4.x\n\n"
