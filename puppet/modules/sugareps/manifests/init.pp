@@ -22,5 +22,7 @@ class sugareps {
     require => [Devops::Apache['devops_apache'], Devops::Php['devops_php']]
   }
 
-  php::pear::module { "Log": }
+  php::pear::module { "Log":
+    require => [Devops::Php['devops_php']]
+  }
 }
