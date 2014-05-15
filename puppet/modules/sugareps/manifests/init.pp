@@ -23,8 +23,7 @@ class sugareps {
   }
 
   php::pear::module { "Log":
-    repository => 'pear.php.net',
     module_prefix => "${php_package}-",
-    require => Package[$php_package]
+    use_package => false
   }
 }
