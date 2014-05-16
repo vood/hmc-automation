@@ -1,3 +1,5 @@
+# cat /etc/security/limits
+
 *
 * Sizes are in multiples of 512 byte blocks, CPU time is in seconds
 *
@@ -36,13 +38,14 @@ default:
         fsize = -1
         core = 2097151
         cpu = -1
-        data = -1
-        rss = -1
+        data = 262144
+        rss = 65536
         stack = 65536
         nofiles = 2000
 
-
 root:
+        data = 524288
+        rss = 524288
 
 daemon:
 
