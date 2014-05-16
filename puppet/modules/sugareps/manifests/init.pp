@@ -21,9 +21,4 @@ class sugareps {
   class { 'devops::db::db2':
     require => [Devops::Apache['devops_apache'], Devops::Php['devops_php']]
   }
-
-  php::pear::module { "Log":
-    module_prefix => "${php_package}-",
-    use_package => false
-  }
 }
