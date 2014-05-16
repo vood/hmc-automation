@@ -85,7 +85,8 @@ class aix {
   }->
 
   exec { "packages from base_71":
-    command => "$rpm -Uvh --force --nodeps $tmp/base_71/*.rpm",
+    path => "/usr/bin:/usr/sbin",
+    command => "rpm -Uvh --force --nodeps $tmp/base_71/*.rpm",
     creates => '/opt/freeware/etc/httpd/conf/httpd.conf',
     timeout => 1800
   }->
@@ -234,8 +235,9 @@ class aix {
   }
 
   exec { "change db2 port to 50000":
-    command => "/usr/bin/sed 's/50001/50000/g' /etc/services > /tmp/service.tmp; mv /tmp/service.tmp /etc/services",
-    unless => '/usr/bin/grep "db2c_db2inst1 50000/tcp" /etc/services'
+    path => '/usr/bin:/usr/sbin',
+    command => "sed 's/50001/50000/g' /etc/services > /tmp/service.tmp; mv /tmp/service.tmp /etc/services",
+    unless => 'grep "db2c_db2inst1 50000/tcp" /etc/services'
   }
 
   file { "/opt/freeware/etc/httpd/conf/extra/server-tuning.conf":
