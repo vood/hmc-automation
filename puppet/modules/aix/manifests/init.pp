@@ -203,7 +203,7 @@ class aix {
     mode    => 0644,
     require => File['/opt/freeware/bin/php'],
     ensure => 'present',
-    notify  => Exec['/opt/freeware/sbin/httpd -k restart'],
+    notify  => Exec['httpd -k restart'],
   }
 
   file {"/opt/freeware/etc/php.d/apc.ini":
@@ -253,7 +253,7 @@ class aix {
     mode    => 0644,
     require => File['/opt/freeware/sbin/httpd'],
     ensure => 'present',
-    notify  => Exec['/opt/freeware/sbin/httpd -k restart']
+    notify  => Exec['httpd -k restart']
   }
 
   file { "/Automation":
